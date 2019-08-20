@@ -4,7 +4,7 @@ const { createStore, combineReducers } = require("redux");
 console.clear();
 
 /* 
-    ACTIONS 
+    ACTIONS / ACTION_CREATORS
 */
 const createPolicy = (name, amount) => {
   return {
@@ -84,7 +84,12 @@ const ourDepartments = combineReducers({
 
 const store = createStore(ourDepartments);
 
-const action = createPolicy("Alex", 20);
+store.dispatch(createPolicy("Alex", 20));
+store.dispatch(createPolicy("Jim", 30));
+store.dispatch(createPolicy("Bob", 40));
+store.dispatch(createClaim("Alex", 120));
+store.dispatch(createClaim("Jim", 50));
+store.dispatch(deletePolicy("Bob"));
 //
 /* 
 Dispatch funcction is in the store
@@ -94,8 +99,23 @@ contains references to reducers  and state
 Has dispatch: when we make an action, data is copied and sent to each reducer 
 */
 
-store.dispatch(action);
+// store.dispatch(action);
 
 // getState gets all data
 store.getState();
 console.log("state:", store.getState());
+
+/* 
+    Important Notes 
+        action creator: create action object 
+        action : how we want to change data in object
+        dispatch: pass COPIES of our action object and pass to reducers 
+        reducers : all run action object, modify data and return that data 
+        state : latest state of application 
+
+    - All reducers need to be combined: use 'combineReducers'
+    - Each store.dispatch goes through the redux cycle 
+    - We can only modify the state through store.dispatch and reducers 
+    - 
+
+ */
